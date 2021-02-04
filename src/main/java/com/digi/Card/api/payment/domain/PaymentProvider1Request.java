@@ -1,12 +1,20 @@
 package com.digi.Card.api.payment.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class PaymentProvider1Request {
 
+    @JsonProperty("source")
     private String source;
+    @JsonProperty("dest")
     private String dest;
+    @JsonProperty("cvv2")
     private String cvv2;
+    @JsonProperty("expDate")
     private String expDate;
+    @JsonProperty("pin")
     private String pin;
+    @JsonProperty("amount")
     private Long amount;
 
 
