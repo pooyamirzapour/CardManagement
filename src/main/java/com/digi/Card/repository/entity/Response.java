@@ -1,4 +1,4 @@
-package com.digi.Card.service.entity;
+package com.digi.Card.repository.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
