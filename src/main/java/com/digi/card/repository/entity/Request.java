@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "Request")
+@Table(name = "TransferRequest")
 public class Request     {
     private long id;
     private String source;
