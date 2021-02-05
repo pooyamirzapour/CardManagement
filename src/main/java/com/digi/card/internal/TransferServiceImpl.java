@@ -26,14 +26,14 @@ public class TransferServiceImpl implements TransferService {
     PaymentProvider2Service paymentProvider2Service;
 
     @Override
-    public String transfer(Request request) throws Exception {
+    public Response transfer(Request request) throws Exception {
         if (isValid(request))
            return findAndTransfer(request);
             throw new Exception("input invalid");
     }
 
     @Transactional
-    private String findAndTransfer(Request request) {
+    private Response findAndTransfer(Request request) {
         request.setInsertDate(new Date());
         Request savedRequest = requestRepository.saveAndFlush(request);
         String status;
@@ -41,16 +41,18 @@ public class TransferServiceImpl implements TransferService {
             status = paymentProvider1Service.pay(Converter.toProvider1DTO(request));
         else
             status = paymentProvider2Service.pay(Converter.toProvider2DTO(request));
-        setResponse(savedRequest, status);
-        return status;
+        Response response = setResponse(savedRequest, status);
+        return response;
     }
 
-    private void setResponse(Request savedRequest, String status) {
+    private Response setResponse(Request savedRequest, String status) {
         Response response = new Response();
         response.setStatus(status);
         response.setInsertDate(new Date());
         response.setRequestId(savedRequest.getId());
+        //response.setCellPhone(savedRequest.getC());
         responseRepository.saveAndFlush(response);
+        return response;
     }
 
 

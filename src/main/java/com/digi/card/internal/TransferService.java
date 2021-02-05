@@ -1,8 +1,9 @@
 package com.digi.card.internal;
 
 import com.digi.card.repository.entity.Request;
+import com.digi.card.repository.entity.Response;
 
 public interface TransferService {
 
-    String transfer(Request request) throws Exception;
+    Response transfer(Request request) throws Exception;
 } 

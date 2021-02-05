@@ -3,6 +3,7 @@ package com.digi.card.internal;
 import com.digi.card.repository.crud.CardRepository;
 import com.digi.card.repository.entity.Card;
 import com.digi.card.repository.entity.Request;
+import com.digi.card.repository.entity.Response;
 import com.digi.card.repository.enums.CardStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -54,7 +55,7 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public String transfer(Request request) throws Exception {
+    public Response transfer(Request request) throws Exception {
        return transferService.transfer(request);
     }
 }

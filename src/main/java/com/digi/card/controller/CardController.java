@@ -2,6 +2,7 @@ package com.digi.card.controller;
 
 import com.digi.card.repository.entity.Card;
 import com.digi.card.repository.entity.Request;
+import com.digi.card.repository.entity.Response;
 import com.digi.card.usecase.service.CardFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,7 +41,7 @@ public class CardController {
 
     @PostMapping("/transfer")
     public ResponseEntity<String> addCard(@Valid @RequestBody Request request) throws Exception {
-        String status = cardFacade.transfer(request);
-        return ResponseEntity.ok(status);
+        Response response = cardFacade.transfer(request);
+        return ResponseEntity.ok(response.getStatus());
     }
 }

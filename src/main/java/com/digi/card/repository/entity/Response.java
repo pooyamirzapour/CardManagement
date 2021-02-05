@@ -10,6 +10,7 @@ public class Response {
     private String status;
     private Date insertDate;
     private Long requestId;
+    private String cellPhone;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -46,5 +47,14 @@ public class Response {
 
     public void setRequestId(Long requestId) {
         this.requestId = requestId;
+    }
+
+    @Transient
+    public String getCellPhone() {
+        return cellPhone;
+    }
+
+    public void setCellPhone(String cellPhone) {
+        this.cellPhone = cellPhone;
     }
 }
