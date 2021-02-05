@@ -2,11 +2,10 @@ package com.digi.card.internal;
 
 import com.digi.card.repository.crud.CardRepository;
 import com.digi.card.repository.entity.Card;
-import com.digi.card.repository.entity.Request;
-import com.digi.card.repository.entity.Response;
+import com.digi.card.repository.entity.TransferRequest;
+import com.digi.card.repository.entity.TransferResponse;
 import com.digi.card.repository.enums.CardStatus;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,7 +26,6 @@ public class CardServiceImpl implements CardService {
             return cardRepository.saveAndFlush(card);
         }
         throw new Exception("operation failed");//todo define proper message and specific exception
-
     }
 
     private boolean isValid(Card card) throws Exception {
@@ -55,7 +53,7 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public Response transfer(Request request) throws Exception {
-       return transferService.transfer(request);
+    public TransferResponse transfer(TransferRequest transferRequest) throws Exception {
+       return transferService.transfer(transferRequest);
     }
 }

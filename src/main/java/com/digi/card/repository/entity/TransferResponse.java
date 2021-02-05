@@ -5,7 +5,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "TransferResponse")
-public class Response {
+public class TransferResponse {
     private long id;
     private String status;
     private Date insertDate;

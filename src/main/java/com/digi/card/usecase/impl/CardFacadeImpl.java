@@ -2,8 +2,8 @@ package com.digi.card.usecase.impl;
 
 import com.digi.card.internal.CardService;
 import com.digi.card.repository.entity.Card;
-import com.digi.card.repository.entity.Request;
-import com.digi.card.repository.entity.Response;
+import com.digi.card.repository.entity.TransferRequest;
+import com.digi.card.repository.entity.TransferResponse;
 import com.digi.card.usecase.service.CardFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,8 +27,8 @@ public class CardFacadeImpl implements CardFacade {
     }
 
     @Override
-    public Response transfer(Request request) throws Exception {
-       return cardService.transfer(request);
+    public TransferResponse transfer(TransferRequest transferRequest) throws Exception {
+       return cardService.transfer(transferRequest);
     }
 
     @Override

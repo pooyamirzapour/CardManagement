@@ -1,8 +1,8 @@
 package com.digi.card.controller;
 
 import com.digi.card.repository.entity.Card;
-import com.digi.card.repository.entity.Request;
-import com.digi.card.repository.entity.Response;
+import com.digi.card.repository.entity.TransferRequest;
+import com.digi.card.repository.entity.TransferResponse;
 import com.digi.card.usecase.service.CardFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,8 +40,8 @@ public class CardController {
     }
 
     @PostMapping("/transfer")
-    public ResponseEntity<String> addCard(@Valid @RequestBody Request request) throws Exception {
-        Response response = cardFacade.transfer(request);
-        return ResponseEntity.ok(response.getStatus());
+    public ResponseEntity<String> addCard(@Valid @RequestBody TransferRequest transferRequest) throws Exception {
+        TransferResponse transferResponse = cardFacade.transfer(transferRequest);
+        return ResponseEntity.ok(transferResponse.getStatus());
     }
 }

@@ -3,10 +3,10 @@ package com.digi.card.internal;
 import com.digi.card.api.payment.adapter.Converter;
 import com.digi.card.api.payment.service.PaymentProvider1Service;
 import com.digi.card.api.payment.service.PaymentProvider2Service;
-import com.digi.card.repository.crud.RequestRepository;
-import com.digi.card.repository.crud.ResponseRepository;
-import com.digi.card.repository.entity.Request;
-import com.digi.card.repository.entity.Response;
+import com.digi.card.repository.crud.TransferRequestRepository;
+import com.digi.card.repository.crud.TransferResponseRepository;
+import com.digi.card.repository.entity.TransferRequest;
+import com.digi.card.repository.entity.TransferResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,48 +17,48 @@ import java.util.Date;
 public class TransferServiceImpl implements TransferService {
 
     @Autowired
-    RequestRepository requestRepository;
+    TransferRequestRepository transferRequestRepository;
     @Autowired
-    ResponseRepository responseRepository;
+    TransferResponseRepository transferResponseRepository;
     @Autowired
     PaymentProvider1Service paymentProvider1Service;
     @Autowired
     PaymentProvider2Service paymentProvider2Service;
 
     @Override
-    public Response transfer(Request request) throws Exception {
-        if (isValid(request))
-           return findAndTransfer(request);
+    public TransferResponse transfer(TransferRequest transferRequest) throws Exception {
+        if (isValid(transferRequest))
+           return findAndTransfer(transferRequest);
             throw new Exception("input invalid");
     }
 
     @Transactional
-    private Response findAndTransfer(Request request) {
-        request.setInsertDate(new Date());
-        Request savedRequest = requestRepository.saveAndFlush(request);
+    private TransferResponse findAndTransfer(TransferRequest transferRequest) {
+        transferRequest.setInsertDate(new Date());
+        TransferRequest savedTransferRequest = transferRequestRepository.saveAndFlush(transferRequest);
         String status;
-        if (request.getSource().substring(4).equals("6037"))
-            status = paymentProvider1Service.pay(Converter.toProvider1DTO(request));
+        if (transferRequest.getSource().substring(4).equals("6037"))
+            status = paymentProvider1Service.pay(Converter.toProvider1DTO(transferRequest));
         else
-            status = paymentProvider2Service.pay(Converter.toProvider2DTO(request));
-        Response response = setResponse(savedRequest, status);
-        return response;
+            status = paymentProvider2Service.pay(Converter.toProvider2DTO(transferRequest));
+        TransferResponse transferResponse = setResponse(savedTransferRequest, status);
+        return transferResponse;
     }
 
-    private Response setResponse(Request savedRequest, String status) {
-        Response response = new Response();
-        response.setStatus(status);
-        response.setInsertDate(new Date());
-        response.setRequestId(savedRequest.getId());
+    private TransferResponse setResponse(TransferRequest savedTransferRequest, String status) {
+        TransferResponse transferResponse = new TransferResponse();
+        transferResponse.setStatus(status);
+        transferResponse.setInsertDate(new Date());
+        transferResponse.setRequestId(savedTransferRequest.getId());
         //response.setCellPhone(savedRequest.getC());
-        responseRepository.saveAndFlush(response);
-        return response;
+        transferResponseRepository.saveAndFlush(transferResponse);
+        return transferResponse;
     }
 
 
-    private boolean isValid(Request request) throws Exception {
-        if (request.getSource() == null || request.getDestination() == null ||
-                request.getPin() == null || request.getCvv() == null || request.getAmount() == null)
+    private boolean isValid(TransferRequest transferRequest) throws Exception {
+        if (transferRequest.getSource() == null || transferRequest.getDestination() == null ||
+                transferRequest.getPin() == null || transferRequest.getCvv() == null || transferRequest.getAmount() == null)
             throw new Exception("invalid input");//todo define proper message and specific exception
         return true;
     }

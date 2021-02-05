@@ -5,7 +5,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "TransferRequest")
-public class Request     {
+public class TransferRequest {
     private long id;
     private String source;
     private String destination;
