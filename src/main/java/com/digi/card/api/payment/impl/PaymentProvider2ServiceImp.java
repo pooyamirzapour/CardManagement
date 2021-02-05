@@ -6,11 +6,12 @@ import com.digi.card.util.RestClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Component
+@Service
 public class PaymentProvider2ServiceImp implements PaymentProvider2Service {
 
     @Autowired
@@ -20,12 +21,12 @@ public class PaymentProvider2ServiceImp implements PaymentProvider2Service {
 
 
     public String pay(PaymentProvider2Request paymentProvider2Request) {
-        doPost(paymentProvider2Request);
-        return "";
+        HttpStatus httpStatus = doPost(paymentProvider2Request);
+        return Integer.toString(httpStatus.value());
     }
 
     private HttpStatus doPost(PaymentProvider2Request paymentProvider2Request) {
-        String url = "https://first-payment-provider/payments/transfer";
+        String url = "https://second-payment-provider/cards/pay";
         Map<String, String> map = new HashMap<>();
         map.put("cvv2", paymentProvider2Request.getCvv2());
         map.put("target", paymentProvider2Request.getTarget());

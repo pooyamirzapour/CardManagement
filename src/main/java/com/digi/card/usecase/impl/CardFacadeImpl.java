@@ -5,9 +5,11 @@ import com.digi.card.repository.entity.Card;
 import com.digi.card.repository.entity.Request;
 import com.digi.card.usecase.service.CardFacade;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class CardFacadeImpl implements CardFacade {
     @Autowired
     CardService cardService;
@@ -24,8 +26,8 @@ public class CardFacadeImpl implements CardFacade {
     }
 
     @Override
-    public void transfer(Request request) {
-
+    public String transfer(Request request) throws Exception {
+       return cardService.transfer(request);
     }
 
     @Override

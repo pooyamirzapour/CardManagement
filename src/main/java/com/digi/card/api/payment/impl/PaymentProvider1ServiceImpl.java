@@ -6,11 +6,12 @@ import com.digi.card.util.RestClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Component
+@Service
 public class PaymentProvider1ServiceImpl implements PaymentProvider1Service {
 
     @Autowired

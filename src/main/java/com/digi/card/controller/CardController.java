@@ -6,6 +6,7 @@ import com.digi.card.usecase.service.CardFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
+@Component
 public class CardController {
 
     @Autowired
@@ -37,8 +39,8 @@ public class CardController {
     }
 
     @PostMapping("/transfer")
-    public ResponseEntity<Card> addCard(@Valid @RequestBody Request request) throws Exception {
-        cardFacade.transfer(request);
-        return null;// new ResponseEntity<>(addedCard, HttpStatus.OK);
+    public ResponseEntity<String> addCard(@Valid @RequestBody Request request) throws Exception {
+        String status = cardFacade.transfer(request);
+        return ResponseEntity.ok(status);
     }
 }

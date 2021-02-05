@@ -2,15 +2,22 @@ package com.digi.card.internal;
 
 import com.digi.card.repository.crud.CardRepository;
 import com.digi.card.repository.entity.Card;
+import com.digi.card.repository.entity.Request;
 import com.digi.card.repository.enums.CardStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class CardServiceImpl implements CardService {
 
     @Autowired
     CardRepository cardRepository;
+
+    @Autowired
+    TransferService transferService;
 
     @Override
     public Card add(Card card) throws Exception {
@@ -44,5 +51,10 @@ public class CardServiceImpl implements CardService {
     @Override
     public List<Card> viewList(String cellPhone) throws Exception {
         return cardRepository.findByCellPhone(cellPhone);
+    }
+
+    @Override
+    public String transfer(Request request) throws Exception {
+       return transferService.transfer(request);
     }
 }
