@@ -10,7 +10,7 @@ public class NotificationRequest {
     private long id;
     private String target;
     private String msg;
-    private Long transferRequestId;
+    private Long transferResponseId;
     private Date insertDate;
 
 
@@ -42,13 +42,13 @@ public class NotificationRequest {
         this.msg = msg;
     }
 
-    @Column(name = "transfer_request_id")
-    public Long getTransferRequestId() {
-        return transferRequestId;
+    @Column(name = "transfer_response_id")
+    public Long getTransferResponseId() {
+        return transferResponseId;
     }
 
-    public void setTransferRequestId(Long transferRequestId) {
-        this.transferRequestId = transferRequestId;
+    public void setTransferResponseId(Long transferResponseId) {
+        this.transferResponseId = transferResponseId;
     }
 
     @Column(name = "insert_date")

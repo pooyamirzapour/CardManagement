@@ -1,0 +1,13 @@
+version: '3.3'
+services:
+  mysql:
+    container_name: card_mysql
+    restart: always
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_USER: 'root'
+    volumes:
+      - my-datavolume:/var/lib/mysql
+    ports:
+      - "3306:3306"

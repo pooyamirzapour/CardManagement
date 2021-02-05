@@ -24,6 +24,7 @@ public class NotificationAspect {
         if (transferResponse.getStatus().equals("200")) {
             NotificationRequest notificationRequest = new NotificationRequest();
             notificationRequest.setTarget(transferResponse.getCellPhone());
+            notificationRequest.setTransferResponseId(transferResponse.getId());
             notificationRequest.setMsg("Done");
             NotificationService.INSTANCE.sendNotification(notificationRequest);
         }

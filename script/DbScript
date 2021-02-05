@@ -1,0 +1,57 @@
+create table Card
+(
+    ID          bigint                   null,
+    Pan         varchar(20) charset utf8 null,
+    cvv         varchar(10) charset utf8 null,
+    expDate     varchar(10) charset utf8 null,
+    cellPhone   varchar(15) charset utf8 null,
+    pin         varchar(10) charset utf8 null,
+    status      varchar(1) charset utf8  null,
+    insert_date datetime                 null
+);
+
+create table NotificationRequest
+(
+    ID                   bigint                    not null
+        primary key,
+    target               varchar(15) charset utf8  null,
+    msg                  varchar(500) charset utf8 null,
+    transfer_response_id bigint                    null,
+    insert_date          datetime                  null
+);
+
+create table NotificationResponse
+(
+    ID                       bigint                  not null,
+    Notification_Response_ID bigint                  null,
+    status                   varchar(3) charset utf8 null,
+    insert_date              datetime                null,
+    constraint NotificationResponse_ID_uindex
+        unique (ID)
+);
+
+alter table NotificationResponse
+    add primary key (ID);
+
+create table TransferRequest
+(
+    ID          bigint                    not null,
+    source      varchar(100) charset utf8 null,
+    destination varchar(100) charset utf8 null,
+    cvv         varchar(4) charset utf8   null,
+    exp_date    varchar(10) charset utf8  null,
+    pin         varchar(10) charset utf8  null,
+    amount      bigint                    null,
+    insert_date datetime                  null,
+    cell_phone  varchar(15) charset utf8  null
+);
+
+create table TransferResponse
+(
+    ID          bigint                   not null
+        primary key,
+    status      varchar(10) charset utf8 null,
+    insert_date datetime                 null,
+    request_id  bigint                   null
+);
+
