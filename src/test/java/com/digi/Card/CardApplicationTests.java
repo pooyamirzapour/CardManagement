@@ -1,11 +1,12 @@
 package com.digi.Card;
 
+import com.digi.card.api.notification.service.NotificationService;
 import com.digi.card.controller.CardController;
 import com.digi.card.internal.CardService;
 import com.digi.card.repository.entity.Card;
+import com.digi.card.repository.entity.NotificationRequest;
 import com.digi.card.repository.entity.TransferRequest;
 import com.digi.card.repository.entity.TransferResponse;
-import com.digi.card.usecase.service.CardFacade;
 import com.digi.card.util.DateUtil;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -13,13 +14,12 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import static org.assertj.core.api.Assertions.assertThat;
-
 
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 class CardApplicationTests {
@@ -30,29 +30,30 @@ class CardApplicationTests {
     @Mock
     DateUtil dateUtil;
 
-    @Mock
-    CardFacade cardFacade;
+    @InjectMocks
+    CardController cardController;
+
 
     @Test
     void addCard() throws Exception {
-		Card card = getCard();
-		Card add = cardService.add(card);
+        Card card = getCard();
+        Card add = cardService.add(card);
         assertThat(add.getPan()).isEqualTo(card.getPan());
     }
 
-	private Card getCard() {
-		Card card = new Card();
-		card.setStatus("1");
-		card.setPan("6037111122223333");
-		card.setCellPhone("09121112222");
-		card.setCvv("1");
-		card.setExpDate("1399");
-		card.setInsertDate(dateUtil.getCurrentDate());
-		card.setPin("111");
-		return card;
-	}
+    private Card getCard() {
+        Card card = new Card();
+        card.setStatus("1");
+        card.setPan("6037111122223333");
+        card.setCellPhone("09121112222");
+        card.setCvv("1");
+        card.setExpDate("1399");
+        card.setInsertDate(dateUtil.getCurrentDate());
+        card.setPin("111");
+        return card;
+    }
 
-	@Test
+    @Test
     void removeCard() throws Exception {
         cardService.remove("6037111122223333");
     }
@@ -81,19 +82,24 @@ class CardApplicationTests {
 
     }
 
-    protected MockMvc mvc;
+    @Test
+    public void testAddCard() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+        Card card = getCard();
+        ResponseEntity<Card> responseEntity = cardController.addCard(card);
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
+    }
 
-    @InjectMocks
-    CardController cardController;
-
-	@Test
-	public void testAddCard() throws Exception {
-		MockHttpServletRequest request = new MockHttpServletRequest();
-		RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
-		Card card = getCard();
-		ResponseEntity<Card> responseEntity = cardController.addCard(card);
-		assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
-	}
+    @Test
+    public void sendNotification() throws Exception {
+        NotificationRequest notificationRequest = new NotificationRequest();
+        notificationRequest.setMsg("sent");
+        notificationRequest.setTransferResponseId(1l);
+        notificationRequest.setTarget("09121234567");
+        notificationRequest.setInsertDate(dateUtil.getCurrentDate());
+        NotificationService.INSTANCE.sendNotification(notificationRequest);
+    }
 
     @Test
     public void testTransferCard() throws Exception {
@@ -122,7 +128,7 @@ class CardApplicationTests {
     }
 
     private TransferRequest getTransfer() {
-        TransferRequest transfer= new TransferRequest();
+        TransferRequest transfer = new TransferRequest();
         transfer.setExpDate("1400");
         transfer.setPin("1400");
         transfer.setSource("6037991123659874");
@@ -131,7 +137,7 @@ class CardApplicationTests {
         transfer.setInsertDate(dateUtil.getCurrentDate());
         transfer.setCvv("1400");
         return transfer;
-	    
+
     }
 
 

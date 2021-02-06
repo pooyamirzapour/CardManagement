@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 public class NotificationAspect {
 
 
-    @Around("execution( * com.digi.card.internal.tranferService.*.*(..))&& args(yourString,..)")
+    @Around("execution( * com.digi.card.internal.TransferServiceImpl.*.*(..))&& args(yourString,..)")
     public void aroundAccount(ProceedingJoinPoint proceedingJoinPoint, String yourString) throws Throwable {
         CodeSignature signature = (CodeSignature) proceedingJoinPoint.getSignature();
         Object returnValue = proceedingJoinPoint.proceed();
