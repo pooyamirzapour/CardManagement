@@ -57,8 +57,3 @@ create table if not exists card.TransferResponse
     request_id  bigint                   null
 );
 
-create table card.test
-{
-ID bigint
-}
-

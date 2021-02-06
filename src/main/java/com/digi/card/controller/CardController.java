@@ -40,7 +40,7 @@ public class CardController {
     }
 
     @PostMapping("/transfer")
-    public ResponseEntity<String> addCard(@Valid @RequestBody TransferRequest transferRequest) throws Exception {
+    public ResponseEntity<String> transfer(@Valid @RequestBody TransferRequest transferRequest) throws Exception {
         TransferResponse transferResponse = cardFacade.transfer(transferRequest);
         return ResponseEntity.ok(transferResponse.getStatus());
     }
