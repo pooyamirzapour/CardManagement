@@ -88,4 +88,18 @@ public class Card {
     public void setInsertDate(Date insertDate) {
         this.insertDate = insertDate;
     }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "id=" + id +
+                ", pan='" + pan + '\'' +
+                ", cvv='" + cvv + '\'' +
+                ", expDate='" + expDate + '\'' +
+                ", cellPhone='" + cellPhone + '\'' +
+                ", pin='" + pin + '\'' +
+                ", status='" + status + '\'' +
+                ", insertDate=" + insertDate +
+                '}';
+    }
 }

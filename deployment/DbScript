@@ -1,4 +1,6 @@
-create table Card
+
+
+create table if not exists card.Card
 (
     ID          bigint                   null,
     Pan         varchar(20) charset utf8 null,
@@ -10,7 +12,7 @@ create table Card
     insert_date datetime                 null
 );
 
-create table NotificationRequest
+create table if not exists card.NotificationRequest
 (
     ID                   bigint                    not null
         primary key,
@@ -20,7 +22,7 @@ create table NotificationRequest
     insert_date          datetime                  null
 );
 
-create table NotificationResponse
+create table if not exists card.NotificationResponse
 (
     ID                       bigint                  not null,
     Notification_Response_ID bigint                  null,
@@ -30,10 +32,10 @@ create table NotificationResponse
         unique (ID)
 );
 
-alter table NotificationResponse
+alter table  card.NotificationResponse
     add primary key (ID);
 
-create table TransferRequest
+create table if not exists card.TransferRequest
 (
     ID          bigint                    not null,
     source      varchar(100) charset utf8 null,
@@ -46,7 +48,7 @@ create table TransferRequest
     cell_phone  varchar(15) charset utf8  null
 );
 
-create table TransferResponse
+create table if not exists card.TransferResponse
 (
     ID          bigint                   not null
         primary key,
@@ -54,4 +56,9 @@ create table TransferResponse
     insert_date datetime                 null,
     request_id  bigint                   null
 );
+
+create table card.test
+{
+ID bigint
+}
 
